@@ -7,7 +7,7 @@
 template<typename T>
 class Point {
     public:
-        Point(const std::vector<T>& coords) : coords(coords) {}
+        Point(const std::vector<T> coords) : coords(coords) {}
 
         Point(const Point& other) : coords(other.coords) {}
 
@@ -34,32 +34,33 @@ class Point {
         }
         
     protected:
+        Point() {}
         std::vector<T> coords;
 };
 
 template<typename T>
-class Point2D : Point<T> {
+class Point2D : public Point<T> {
     public:
-        Point2D(T x, T y) {
-            std::vector<T> coords;
-            coords.push_back(x);
-            coords.push_back(y);
-            Point<T>::Point(coords);
+        Point2D(T x, T y) : Point<T>() {
+            this->coords.push_back(x);
+            this->coords.push_back(y);
         }
 
         Point2D(const Point2D& other) {
-            Point<T>Point(other.coords);
+            this->coords = other.coords;
         }
 
         Point2D& operator=(const Point2D& other) {
-            Point<T>::operator=(other);
+            this->coords = other->other;
             return *this;
         }
 
-        Point2D(Point2D&& other) : Point<T>(std::move(other)) {}
+        Point2D(Point2D&& other) {
+            this->coords(std::move(other.coords));
+        }
 
         Point2D& operator=(Point2D&& other) {
-            Point<T>::operator=(std::move(other));
+            this->coords = std::move(other.coords);
             return *this;
         }
 
@@ -75,26 +76,26 @@ class Point2D : Point<T> {
 };
 
 template<typename T>
-class Point3D : Point<T> {
+class Point3D : public Point<T> {
     public:
-        Point3D(T x, T y, T z) {
-            std::vector<T> coords;
-            coords.push_back(x);
-            coords.push_back(y);
-            coords.push_back(z);
-            Point<T>::Point(coords);
+        Point3D(T x, T y, T z) : Point<T>(){
+            this->coords.push_back(x);
+            this->coords.push_back(y);
+            this->coords.push_back(z);
         }
 
         Point3D(const Point3D& other) {
-            Point<T>Point(other.coords);
+            this->coords = other.coords;
         }
 
         Point3D& operator=(const Point3D& other) {
-            Point<T>::operator=(other);
+            this->coords = other.coords;
             return *this;
         }
 
-        Point3D(Point3D&& other) : Point<T>(std::move(other)) {}
+        Point3D(Point3D&& other) {
+            this->coords = std::move(other);
+        }
 
         Point3D& operator=(Point3D&& other) {
             Point<T>::operator=(std::move(other));
